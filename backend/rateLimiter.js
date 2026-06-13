@@ -709,7 +709,7 @@ export const getRedisMetrics = async () => {
   }
 };
 
-// Auto-connect on startup from env vars
+// Auto-connect on startup from env vars (only if configured)
 const envConfig = {};
 if (process.env.REDIS_URL) {
   try {
@@ -723,4 +723,6 @@ if (process.env.REDIS_URL) {
   if (process.env.REDIS_PORT) envConfig.port = parseInt(process.env.REDIS_PORT);
   if (process.env.REDIS_PASSWORD) envConfig.password = process.env.REDIS_PASSWORD;
 }
-connectRedis(envConfig);
+if (process.env.REDIS_URL || process.env.REDIS_HOST) {
+  connectRedis(envConfig);
+}
