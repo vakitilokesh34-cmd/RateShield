@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 46" fill="none">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e8e0d0"/>
+      <stop offset="100%" stop-color="#d4b26f"/>
+    </linearGradient>
+  </defs>
+  <!-- Beautiful Golden Shield Outline -->
+  <path d="M18 4 L4 10 L4 22 C4 33 18 42 18 42 C18 42 32 33 32 22 L32 10 Z" stroke="url(#shieldGrad)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+  <!-- Stylized Monogram "R" inside the shield -->
+  <path d="M14 16 H20 C22 16 23 17 23 19 C23 21 22 22 20 22 H14 V30 M18 22 L23 30" stroke="url(#shieldGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

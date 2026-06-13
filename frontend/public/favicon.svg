@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" fill="none">
+  <defs>
+    <linearGradient id="sg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4f7df3"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+  </defs>
+  <path d="M16 2 L4 8 L4 18 C4 27 16 30 16 30 C16 30 28 27 28 18 L28 8 Z" fill="url(#sg)"/>
+  <!-- Gauge bars -->
+  <rect x="10" y="14" width="3" height="10" rx="1" fill="#22c55e"/>
+  <rect x="14.5" y="11" width="3" height="13" rx="1" fill="#f59e0b"/>
+  <rect x="19" y="17" width="3" height="7" rx="1" fill="#ef4444"/>
+</svg>
