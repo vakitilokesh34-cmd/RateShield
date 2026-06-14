@@ -17,8 +17,9 @@ app.use(express.json());
 app.use(cors({
   origin: [
     process.env.FRONTEND_URL,
+    'https://rate-shield.vercel.app',
     'http://localhost:5173'
-  ],
+  ].filter(Boolean),
   credentials: true
 }));
 
