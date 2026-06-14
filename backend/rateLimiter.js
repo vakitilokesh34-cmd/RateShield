@@ -368,9 +368,9 @@ const runSlidingWindowMemory = (key, limit, windowSizeMs, now, member) => {
 };
 
 // --- Helper: Retrieve store diagnostics for visualization ---
-const getStoreState = async (ip, algo, config) => {
+const getStoreState = async (identifier, algo, config) => {
   const now = Date.now();
-  const key = `rate_limit:${algo}:${ip}`;
+  const key = `rate_limit:${algo}:${identifier}`;
   
   if (isRedisConnected) {
     try {
@@ -579,7 +579,7 @@ export const rateLimiter = async (req, res, next) => {
     }
 
     // Fetch dynamic store state for visualization
-    const state = await getStoreState(ip, algo, config);
+    const state = await getStoreState(identifier, algo, config);
 
     const rateLimitInfo = {
       allowed: !!allowed,

@@ -94,12 +94,20 @@ function App() {
     const timer = setInterval(() => {
       const now = Date.now();
       const state = serverStateRef.current;
-      if (algorithm === 'token_bucket' && state) {
-        const elapsed = now - state.lastUpdated;
-        setSimulatedTokens(Math.min(capacity, state.tokens + (elapsed > 0 ? elapsed * activeRefillRateMs : 0)));
-      } else if (algorithm === 'leaky_bucket' && state) {
-        const elapsed = now - state.lastUpdated;
-        setSimulatedWater(Math.max(0, state.water - (elapsed > 0 ? elapsed * activeLeakRateMs : 0)));
+      if (algorithm === 'token_bucket') {
+        if (state) {
+          const elapsed = now - state.lastUpdated;
+          setSimulatedTokens(Math.min(capacity, state.tokens + (elapsed > 0 ? elapsed * activeRefillRateMs : 0)));
+        } else {
+          setSimulatedTokens(capacity);
+        }
+      } else if (algorithm === 'leaky_bucket') {
+        if (state) {
+          const elapsed = now - state.lastUpdated;
+          setSimulatedWater(Math.max(0, state.water - (elapsed > 0 ? elapsed * activeLeakRateMs : 0)));
+        } else {
+          setSimulatedWater(0);
+        }
       } else if (algorithm === 'fixed_window') {
         setWindowResetTime(windowSec - (Math.floor(now / 1000) % windowSec));
       } else if (algorithm === 'sliding_window' && state && state.log) {
@@ -152,8 +160,15 @@ function App() {
         remaining: data.remaining !== undefined ? data.remaining : null,
         mode: data.isRedis ? 'Redis' : 'Memory'
       }, ...prev].slice(0, 100));
-      if (!success) { setError(data); if (data.meta) setServerState(data.meta); }
-      else { setResponse(data); if (data.rateLimit && data.rateLimit.meta) setServerState(data.rateLimit.meta); }
+      if (!success) {
+        setError(data);
+        if (data.meta) setServerState({ ...data.meta, lastUpdated: Date.now() });
+      } else {
+        setResponse(data);
+        if (data.rateLimit && data.rateLimit.meta) {
+          setServerState({ ...data.rateLimit.meta, lastUpdated: Date.now() });
+        }
+      }
     } catch (err) {
       setLogs(prev => [{ id: Math.random().toString(36).substr(2, 9), time: new Date().toLocaleTimeString(), method: 'GET', path, status: 'Error', remaining: 0, mode: 'None' }, ...prev]);
       setError({ message: 'Server connection failed', error: err.message });
